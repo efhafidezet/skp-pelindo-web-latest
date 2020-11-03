@@ -17,18 +17,9 @@ Route::get('/', function () {
     return view('layouts.app');
 });
 
-Route::get('/questionnaires/list', function () {
-    return view('pages.questionnaires.list');
-});
-
-Route::get('/questionnaires/list', function () {
-    return view('pages.questionnaires.list');
-});
-
-Route::get('/questionnaires/1', function () {
-    return view('pages.questionnaires.questions.list');
-});
-
+// Route::get('/questionnaires/1', function () {
+//     return view('pages.questionnaires.questions.list');
+// });
 
 Auth::routes();
 
@@ -37,3 +28,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('groups', 'GroupController@show');
 Route::post('groups', 'GroupController@store');
+
+
+Route::get('questionnaires', 'QuestionnairesController@show');
+Route::post('questionnaires', 'QuestionnairesController@store');
+
+Route::get('questionnaires/{questionnaires_id}', 'QuestionnairesController@showQuestionnaire');
+
+
+Route::post('question', 'QuestionController@store');

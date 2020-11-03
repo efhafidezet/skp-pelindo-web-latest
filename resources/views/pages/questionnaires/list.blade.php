@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
 @section('main')
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            {{-- <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Judul</h1>
+            </div> --}}
+            <!-- /.col -->
+            {{-- <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+            </div> --}}
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -30,7 +51,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th width="5">No</th>
                                     <th>Nama Kuesioner</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Selesai</th>
@@ -39,19 +60,37 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($listQuestionnaire as $index => $item )
                                 <tr>
+                                    <td align="center">{{$index +1}}</td>
+                                    <td width="100">{{$item->name}}</td>
+                                    <td width="50" align="center">
+                                        {{date('d-m-Y', strtotime($item->start_date))}}
+                                    </td>
+                                    <td width="50" align="center">
+                                        {{date('d-m-Y', strtotime($item->end_date))}}
+                                    </td>
+                                    <td>{{$item->details}}</td>
+                                    <td width="100" align="center">
+                                        <a href="{{url('')}}/questionnaires/{{$item->questionnaire_id}}" class="btn btn-primary btn-xs">Lihat</a>
+                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
+                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                {{-- <tr>
                                     <td>1</td>
                                     <td>Kuesioner Penumpang</td>
                                     <td>11-7-2014</td>
                                     <td>20-7-2014</td>
                                     <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
                                     <td>
-                                        <a href="" class="btn btn-primary btn-xs">Lihat</a>
+                                        <a href="{{url('')}}/questionnaires/1" class="btn btn-primary btn-xs">Lihat</a>
                                         <a href="" class="btn btn-warning btn-xs">Edit</a>
                                         <a href="" class="btn btn-danger btn-xs">Hapus</a>
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{-- <tr>
                                     <td>2</td>
                                     <td>Kuesioner Pelayanan Kapal</td>
                                     <td>11-7-2014</td>
@@ -86,7 +125,7 @@
                                         <a href="" class="btn btn-warning btn-xs">Edit</a>
                                         <a href="" class="btn btn-danger btn-xs">Hapus</a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
