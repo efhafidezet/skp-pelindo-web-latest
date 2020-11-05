@@ -29,6 +29,9 @@
         <!-- DataTables -->
         <link rel="stylesheet" href="{{url('')}}/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="{{url('')}}/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="{{url('')}}/assets/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="{{url('')}}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
     </head>
@@ -316,6 +319,8 @@
         <script src="{{url('')}}/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
         <script src="{{url('')}}/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
         <script src="{{url('')}}/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+        <!-- Select2 -->
+        <script src="{{url('')}}/assets/plugins/select2/js/select2.full.min.js"></script>
         <!-- AdminLTE App -->
         <script src="{{url('')}}/assets/dist/js/adminlte.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -338,6 +343,11 @@
                     info: true,
                     autoWidth: false,
                     responsive: true,
+                });
+
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
                 });
             });
         </script>

@@ -59,9 +59,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($listGroup as $index => $item )
-                                
+                                @if ($item->group_id != 0)
                                 <tr>
-                                    <td align="center">{{$index +1}}</td>
+                                    <td align="center">{{$index}}</td>
                                     <td>{{$item->name}}</td>
                                     <td width="50" align="center">
                                         {{$item->order}}
@@ -71,6 +71,7 @@
                                         <a href="" class="btn btn-danger btn-xs">Hapus</a>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                             <tfoot>
