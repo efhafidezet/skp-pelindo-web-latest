@@ -14,12 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('welcome');
 });
-
-// Route::get('/questionnaires/1', function () {
-//     return view('pages.questionnaires.questions.list');
-// });
 
 Auth::routes();
 

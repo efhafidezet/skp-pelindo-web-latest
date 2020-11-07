@@ -36,6 +36,16 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -45,12 +55,18 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function getJWTIdentifier()
+    public function adminlte_image()
     {
-        return $this->getKey();
+        return 'https://picsum.photos/300/300';
     }
-    public function getJWTCustomClaims()
+
+    public function adminlte_desc()
     {
-        return [];
+        return 'That\'s a nice guy';
+    }
+
+    public function adminlte_profile_url()
+    {
+        return 'profile/username';
     }
 }

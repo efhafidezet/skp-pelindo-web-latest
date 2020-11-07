@@ -1,27 +1,12 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
-@section('main')
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            {{-- <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Judul</h1>
-            </div> --}}
-            <!-- /.col -->
-            {{-- <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
-                </ol>
-            </div> --}}
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+@section('title', 'PELINDO IV - Survey Kepuasan Pelanggan')
+
+@section('content_header')
+<h1>Daftar Parameter</h1>
+@stop
+
+@section('content')
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -48,7 +33,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <table id="example2" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th width="5">No</th>
@@ -135,6 +120,14 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+@stop
 
+@section('css')
+<link rel="stylesheet" href="/css/admin_custom.css">
+@stop
 
-@endsection
+@section('js')
+<script>
+    console.log('Hi!'); 
+</script>
+@stop
