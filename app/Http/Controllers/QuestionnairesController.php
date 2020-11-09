@@ -7,6 +7,7 @@ use App\Models\Questionnaire;
 use App\Models\Question;
 use App\Models\Group;
 use App\Models\QuestionAnswer;
+use App\Models\Log;
 
 class QuestionnairesController extends Controller
 {
@@ -15,12 +16,6 @@ class QuestionnairesController extends Controller
         return view('pages.questionnaires.list', compact('listQuestionnaire'));
     }
 
-    
-    public function questionnaireAuth() {
-        $data = Questionnaire::all();
-        return response()->json($data, 200);
-    }
-    
     public function store(Request $request) {
         $input = $request->all();
         $chat = Questionnaire::create($input);

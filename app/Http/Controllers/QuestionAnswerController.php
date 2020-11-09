@@ -13,4 +13,5 @@ class QuestionAnswerController extends Controller
 
         return redirect('questionnaires/');
     }
+
 }

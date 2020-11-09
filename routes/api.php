@@ -31,3 +31,5 @@ Route::get('questionall', 'QuestionController@questionAuth')->middleware('jwt.ve
 Route::get('questionbyid', 'QuestionController@questionByIdAuth')->middleware('jwt.verify');
 
 Route::get('questionbyidquestionnaire', 'QuestionController@questionByQuestionnaire')->middleware('jwt.verify');
+
+Route::post('saveAnswer', 'AnswerController@save')->middleware('jwt.verify');
