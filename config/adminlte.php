@@ -273,7 +273,7 @@ return [
         ['header' => 'HASIL'],
         [
             'text' => 'Hasil',
-            'url'  => 'admin/settings',
+            'url'  => 'result',
             'icon' => 'far fa-circle nav-icon',
         ],
         ['header' => 'account_settings'],

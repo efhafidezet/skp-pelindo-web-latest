@@ -19,9 +19,9 @@ class CreateLogAttemptsTable extends Migration
             $table->integer('questionnaire_id');
             $table->integer('attempt');
             $table->dateTime('attempt_date');
-            $table->integer('long');
-            $table->integer('lat');
-            $table->integer('photo');
+            $table->decimal('long');
+            $table->decimal('lat');
+            $table->text('photo');
             $table->timestamps();
         });
     }
