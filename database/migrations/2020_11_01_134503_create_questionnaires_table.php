@@ -19,6 +19,7 @@ class CreateQuestionnairesTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->text('details');
+            $table->enum('is_continuous', array('0','1'))->default('0');
             $table->enum('is_active', array('0','1'))->default('1');
             $table->timestamps();
         });
