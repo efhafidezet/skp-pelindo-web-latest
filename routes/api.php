@@ -24,3 +24,10 @@ Route::get('book', 'BookController@book');
 
 Route::get('bookall', 'BookController@bookAuth')->middleware('jwt.verify');
 Route::get('user', 'UserController@getAuthenticatedUser')->middleware('jwt.verify');
+
+Route::get('questionnaireall', 'QuestionnairesController@questionnaireAuth')->middleware('jwt.verify');
+Route::get('questionall', 'QuestionController@questionAuth')->middleware('jwt.verify');
+
+Route::get('questionbyid', 'QuestionController@questionByIdAuth')->middleware('jwt.verify');
+
+Route::get('questionbyidquestionnaire', 'QuestionController@questionByQuestionnaire')->middleware('jwt.verify');

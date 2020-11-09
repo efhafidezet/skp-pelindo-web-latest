@@ -15,6 +15,12 @@ class QuestionnairesController extends Controller
         return view('pages.questionnaires.list', compact('listQuestionnaire'));
     }
 
+    
+    public function questionnaireAuth() {
+        $data = Questionnaire::all();
+        return response()->json($data, 200);
+    }
+    
     public function store(Request $request) {
         $input = $request->all();
         $chat = Questionnaire::create($input);
