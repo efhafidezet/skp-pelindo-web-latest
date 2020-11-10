@@ -69,4 +69,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return 'profile/username';
     }
+
+    public function logAttempts()
+    {
+        return $this->belongsToMany(LogAttempt::class, 'log_attempts');
+    }
 }

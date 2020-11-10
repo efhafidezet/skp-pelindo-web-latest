@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -45,8 +46,28 @@ class QuestionController extends Controller
             $id_log = $data_log->log_attempt_id;
         }
 
+        // $result = [
+        //     'data_question' => $data_question,
+        //     'id_log' => $id_log,
+        // ];
+        
+        $listGroup = Group::all()->sortBy("order");
+        
+        foreach($listGroup as $item){
+            $listQuestion = DB::table('questions')
+                ->join('groups','groups.group_id','=','questions.group_id')
+                ->where('groups.group_id', $item->group_id)
+                ->get();
+            $question = $listQuestion;
+            $questions = [];
+            $questions = $question ;
+            $item->question = $questions;
+        }
+        
+        $resQData = $listGroup;
+        
         $result = [
-            'data_question' => $data_question,
+            'question_data' => $resQData,
             'id_log' => $id_log,
         ];
 

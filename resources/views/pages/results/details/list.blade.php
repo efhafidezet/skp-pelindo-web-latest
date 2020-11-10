@@ -49,13 +49,7 @@
                                 @foreach ($listResult as $index => $item )
                                 <tr>
                                     <td align="center">{{$index+1}}</td>
-                                    <td>
-                                        @foreach($listUser as $itemU)
-                                            @if($itemU->id == $item->user_id)
-                                                {{ $itemU->name }}
-                                            @endif
-                                        @endforeach
-                                    </td>
+                                    <td>{{$item->user_id}}</td>
                                     <td>{{$item->questionnaire_id}}</td>
                                     <td>{{$item->attempt_date}}</td>
                                     <td align="">
