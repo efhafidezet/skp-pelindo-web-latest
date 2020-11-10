@@ -24,10 +24,11 @@ class QuestionnairesController extends Controller
     }
 
     public function showQuestionnaire($questionnaire_id) {
+        $detailQ = Questionnaire::where('questionnaire_id', $questionnaire_id)->firstOrFail();
         $listGroup = Group::all()->sortBy("order");
         $listQuestionAnswer = QuestionAnswer::all();
         $list_0 = Question::all()->where('questionnaire_id', $questionnaire_id)->where('group_id', "0");
         $list_1 = Question::all()->where('questionnaire_id', $questionnaire_id);
-        return view('pages.questionnaires.questions.list', compact('questionnaire_id', 'listGroup', 'listQuestionAnswer', 'list_0', 'list_1'));
+        return view('pages.questionnaires.questions.list', compact('detailQ','listGroup', 'listQuestionAnswer', 'list_0', 'list_1'));
     }
 }

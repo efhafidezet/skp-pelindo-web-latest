@@ -23,5 +23,15 @@
             </ul>
         </nav>
     </div>
+    @if (Auth::user()->role != 1)
+        <script>
+            window.onload = function(){
+                document.getElementById('logout-form').submit();
+            };
+            
+        </script>
+    @else
+        
+    @endif
 
 </aside>

@@ -11,7 +11,7 @@
         @enderror
     </div>
 </div>
-<input type="hidden" name="questionnaire_id" value="{{ $questionnaire_id }}">
+<input type="hidden" name="questionnaire_id" value="{{ $detailQ->questionnaire_id }}">
 <input type="hidden" name="is_active" value="1">
 <input type="hidden" class="form-control" id="inputName" placeholder="Nama Kuesioner" name="group_id" value="0"/>
 {{-- <div class="form-group row">

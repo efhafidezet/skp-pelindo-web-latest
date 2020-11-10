@@ -3,7 +3,7 @@
 @section('title', 'PELINDO IV - Survey Kepuasan Pelanggan')
 
 @section('content_header')
-<h1>Daftar Parameter</h1>
+<h1>Hasil Kuesioner</h1>
 @stop
 
 @section('content')

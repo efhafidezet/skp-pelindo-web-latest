@@ -3,7 +3,7 @@
 @section('title', 'PELINDO IV - Survey Kepuasan Pelanggan')
 
 @section('content_header')
-<h1>Nama Kuesioner</h1>
+<h1>{{$detailQ->name}}</h1>
 @stop
 
 @section('content')
@@ -18,7 +18,6 @@
                             {{-- Daftar Pertanyaan  --}}
                             Demografi Responden
                         </h3>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modal-demo">
                                 Tambah Baru
