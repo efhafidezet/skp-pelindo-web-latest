@@ -50,13 +50,14 @@
                                 <tr>
                                     <td align="center">{{$index+1}}</td>
                                     <td>
-                                        @foreach($listUser as $itemU)
+                                        {{$item->uname}}
+                                        {{-- @foreach($listUser as $itemU)
                                             @if($itemU->id == $item->user_id)
                                                 {{ $itemU->name }}
                                             @endif
-                                        @endforeach
+                                        @endforeach --}}
                                     </td>
-                                    <td>{{$item->questionnaire_id}}</td>
+                                    <td>{{$item->qname}}</td>
                                     <td>{{$item->attempt_date}}</td>
                                     <td align="">
                                         <a href="http://maps.google.com/?q={{$item->latitude.','.$item->longitude}}" class="btn btn-secondary btn-xs" target="_blank">
@@ -69,7 +70,7 @@
                                         </button>
                                     </td>
                                     <td width="100" align="center">
-                                        <a href="" class="btn btn-warning btn-xs">Lihat Jawaban</a>
+                                        <a href="{{url('')}}/result/{{$item->log_attempt_id}}" class="btn btn-warning btn-xs">Lihat Jawaban</a>
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="modal-img-{{$index+1}}">

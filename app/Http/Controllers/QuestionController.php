@@ -55,9 +55,27 @@ class QuestionController extends Controller
         
         foreach($listGroup as $item){
             $listQuestion = DB::table('questions')
-                ->join('groups','groups.group_id','=','questions.group_id')
-                ->where('groups.group_id', $item->group_id)
+                ->where('questions.group_id', $item->group_id)
+                ->where('questions.questionnaire_id', $id)
+                ->where('questions.is_active', "1")
                 ->get();
+            
+            foreach($listQuestion as $itemQ){
+                $listQAnswer = DB::table('question_answers')
+                    ->where('question_answers.question_id', $itemQ->question_id)
+                    ->get();
+                    $val = 1;
+                    foreach($listQAnswer as $itemQA){
+                        $itemQA->value = $val;
+                        $val++;
+                    }
+                
+                $answer = $listQAnswer;
+                $answers = [];
+                $answers = $answer ;
+                $itemQ->question_answer = $answers;
+            }
+            
             $question = $listQuestion;
             $questions = [];
             $questions = $question ;

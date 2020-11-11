@@ -34,3 +34,4 @@ Route::get('questionnaires/{questionnaires_id}', 'QuestionnairesController@showQ
 Route::post('question', 'QuestionController@store');
 
 Route::get('result', 'LogAttemptController@show');
+Route::get('result/{id}', 'LogAttemptController@showDetail');
