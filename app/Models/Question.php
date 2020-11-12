@@ -17,4 +17,6 @@ class Question extends Model
         'group_id',
         'is_active',
     ];
+
+    protected $primaryKey = 'question_id';
 }

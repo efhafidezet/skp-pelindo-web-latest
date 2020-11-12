@@ -38,7 +38,7 @@
                                 <tr>
                                     <th width="50">ID</th>
                                     <th>Pertanyaan</th>
-                                    <th width="150"></th>
+                                    <th width="150" align="center">Opsi Jawaban</th>
                                     <th width="100"></th>
                                 </tr>
                             </thead>
@@ -48,16 +48,62 @@
                                     <tr>
                                         <td align="center">{{$no}}</td>
                                         <td>{{$item->question}}</td>
-                                        <td>
+                                        <td align="center">
+                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-add-question-answer{{$item->question_id}}">
+                                                Tambah
+                                            </button>
                                             <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#modal-question-answer{{$item->question_id}}">
-                                                Opsi Jawaban
+                                                Lihat
                                             </button>
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                            <a href="" class="btn btn-danger btn-xs">Hapus</a>
+                                            <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-update-question-{{$item->question_id}}">
+                                                Edit
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete-question-{{$item->question_id}}">
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
+                                    <div class="modal fade" id="modal-add-question-answer{{$item->question_id}}">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Tambah Opsi Jawaban</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal" method="POST" action="{{url('')}}/questionAnswer">
+                                                            @csrf
+                                                            <div class="form-group row">
+                                                                <label for="inputAnswer" class="col-sm-3 col-form-label">Jawaban</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="inputAnswer" placeholder="Jawaban" name="answer" value="{{ old('answer') }}"/>
+                                                                    @error('answer')
+                                                                        <span class="text-danger" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="questionnaire_id" value="{{ $detailQ->questionnaire_id }}">
+                                                            <input type="hidden" name="question_id" value="{{$item->question_id}}">
+
+                                                            <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
+                                                        </form>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                    {{-- <div class="modal-footer">
+                                                        
+                                                    </div> --}}
+                                                    <!-- /.card-footer -->
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
                                     <div class="modal fade" id="modal-question-answer{{$item->question_id}}">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -93,31 +139,68 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
+                                    <div class="modal fade" id="modal-update-question-{{$item->question_id}}">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Ubah Pertanyaan</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form class="form-horizontal" method="POST" action="{{url('')}}/question/update">
+                                                    @csrf
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            <label for="inputQuestionUpdate" class="col-sm-3 col-form-label">Pertanyaan</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control" id="inputQuestionUpdate" placeholder="Pertanyaan" name="question" value="{{$item->question}}"/>
+                                                                @error('question')
+                                                                    <span class="text-danger" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="question_id" value="{{ $item->question_id }}">
+                                                        <input type="hidden" name="questionnaire_id" value="{{ $detailQ->questionnaire_id }}">
+                                                        {{-- <input type="hidden" name="is_active" value="1"> --}}
+
+                                                        <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <div class="modal fade" id="modal-delete-question-{{$item->question_id}}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Hapus Pertanyaan</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form class="form-horizontal" method="POST" action="{{url('')}}/question/update">
+                                                    @csrf
+                                                    <div class="card-body">
+                                                        <input type="hidden" name="question_id" value="{{ $item->question_id }}">
+                                                        <input type="hidden" name="questionnaire_id" value="{{ $detailQ->questionnaire_id }}">
+                                                        <input type="hidden" name="is_active" value="0">
+
+                                                        <button type="submit" class="btn btn-danger" style="float: right;">Hapus</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
                                     <!-- /.modal -->
                                 @php $no++; @endphp
                                 @endforeach
-                                {{-- <tr>
-                                    <td>1</td>
-                                    <td>Silakan pilih peran atau posisi Anda di perusahaan</td>
-                                    <td>
-                                        <a href="" class="btn btn-secondary btn-xs">Opsi Jawaban</a>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Lokasi pelayanan PT. Pelabuhan Indonesia IV (Persero) yang paling banyak Anda terima? </td>
-                                    <td>
-                                        <a href="" class="btn btn-secondary btn-xs">Opsi Jawaban</a>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
@@ -168,8 +251,13 @@
                                 @foreach ($listGroup as $val)
                                 @if ($val->group_id != 0)
                                     <tr class="bg-white">
-                                        <td colspan="3" class="font-italic">
+                                        <td colspan="2" class="font-italic">
                                             {{$val->name}}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#modal-question">
+                                                Saran & Catatan
+                                            </button>
                                         </td>
                                     </tr>
 
@@ -179,11 +267,74 @@
                                         <tr>
                                             <td align="center">{{$no}}</td>
                                             <td>{{$item->question}}</td>
-                                            <td>
-                                                <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                                <a href="" class="btn btn-danger btn-xs">Hapus</a>
+                                            <td align="center">
+                                                <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-update-question-{{$item->question_id}}">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete-question-{{$item->question_id}}">
+                                                    Hapus
+                                                </button>
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="modal-update-question-{{$item->question_id}}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Ubah Pertanyaan</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form class="form-horizontal" method="POST" action="{{url('')}}/question/update">
+                                                        @csrf
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="inputQuestionUpdate" class="col-sm-3 col-form-label">Pertanyaan</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="inputQuestionUpdate" placeholder="Pertanyaan" name="question" value="{{$item->question}}"/>
+                                                                    @error('question')
+                                                                        <span class="text-danger" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="question_id" value="{{ $item->question_id }}">
+                                                            <input type="hidden" name="questionnaire_id" value="{{ $detailQ->questionnaire_id }}">
+                                                            {{-- <input type="hidden" name="is_active" value="1"> --}}
+
+                                                            <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+                                        <div class="modal fade" id="modal-delete-question-{{$item->question_id}}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Hapus Pertanyaan</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form class="form-horizontal" method="POST" action="{{url('')}}/question/update">
+                                                        @csrf
+                                                        <div class="card-body">
+                                                            <input type="hidden" name="question_id" value="{{ $item->question_id }}">
+                                                            <input type="hidden" name="questionnaire_id" value="{{ $detailQ->questionnaire_id }}">
+                                                            <input type="hidden" name="is_active" value="0">
+    
+                                                            <button type="submit" class="btn btn-danger" style="float: right;">Hapus</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
                                         @php $no++; @endphp
                                         @endif
                                     @endforeach

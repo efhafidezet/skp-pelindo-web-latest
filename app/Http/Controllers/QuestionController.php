@@ -13,8 +13,14 @@ class QuestionController extends Controller
     public function store(Request $request) {
         echo $request->input('questionnaire_id');
         $input = $request->all();
-        $chat = Question::create($input);
+        $createData = Question::create($input);
 
+        return redirect('questionnaires/'.$request->input('questionnaire_id'));
+    }
+
+    public function update(Request $request) {
+        $detailQuestion = Question::where('question_id', $request->input('question_id'))->firstOrFail();
+        $detailQuestion->update($request->all());
         return redirect('questionnaires/'.$request->input('questionnaire_id'));
     }
 

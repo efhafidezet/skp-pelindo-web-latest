@@ -18,4 +18,6 @@ class Questionnaire extends Model
         'details',
         'is_active',
     ];
+
+    protected $primaryKey = 'questionnaire_id';
 }

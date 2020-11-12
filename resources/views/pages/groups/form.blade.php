@@ -1,7 +1,7 @@
 
 
 <div class="form-group row">
-    <label for="inputName" class="col-sm-3 col-form-label">Nama Parameter1</label>
+    <label for="inputName" class="col-sm-3 col-form-label">Nama Parameter</label>
     <div class="col-sm-9">
         <input type="text" class="form-control" id="inputName" placeholder="Nama Parameter" name="name" value="{{ old('name') }}"/>
         @error('name')

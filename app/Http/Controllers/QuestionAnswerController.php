@@ -10,8 +10,9 @@ class QuestionAnswerController extends Controller
     public function store(Request $request) {
         $input = $request->all();
         $chat = QuestionAnswer::create($input);
+        
 
-        return redirect('questionnaires/');
+        return redirect('questionnaires/'.$request->input('questionnaire_id'));
     }
 
 }

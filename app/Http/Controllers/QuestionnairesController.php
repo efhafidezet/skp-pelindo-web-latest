@@ -12,7 +12,7 @@ use App\Models\Log;
 class QuestionnairesController extends Controller
 {
     public function show() {
-        $listQuestionnaire = Questionnaire::all();
+        $listQuestionnaire = Questionnaire::all()->where('is_active', "1");
         return view('pages.questionnaires.list', compact('listQuestionnaire'));
     }
 
@@ -27,8 +27,19 @@ class QuestionnairesController extends Controller
         $detailQ = Questionnaire::where('questionnaire_id', $questionnaire_id)->firstOrFail();
         $listGroup = Group::all()->sortBy("order");
         $listQuestionAnswer = QuestionAnswer::all();
-        $list_0 = Question::all()->where('questionnaire_id', $questionnaire_id)->where('group_id', "0");
-        $list_1 = Question::all()->where('questionnaire_id', $questionnaire_id);
+        $list_0 = Question::all()->where('questionnaire_id', $questionnaire_id)->where('group_id', "0")->where('is_active', "1");
+        $list_1 = Question::all()->where('questionnaire_id', $questionnaire_id)->where('is_active', "1");
         return view('pages.questionnaires.questions.list', compact('detailQ','listGroup', 'listQuestionAnswer', 'list_0', 'list_1'));
+    }
+
+    public function update(Request $request) {
+        $detailQuestion = Questionnaire::where('questionnaire_id', $request->input('questionnaire_id'))->firstOrFail();
+        $detailQuestion->update($request->all());
+        return redirect('questionnaires/');
+    }
+
+    public function questionnaireAuth() {
+        $data = Questionnaire::all();
+        return response()->json($data, 200);
     }
 }

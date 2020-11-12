@@ -55,62 +55,114 @@
                                     <td width="50" align="center">
                                         {{date('d-m-Y', strtotime($item->end_date))}}
                                     </td>
-                                    <td>{{$item->details}}</td>
+                                    <td>
+                                        {{$item->details}}
+                                        {{-- @if ($item->is_continuous == 0)
+                                            <span class="font-italic">Periodik</span>
+                                        @else
+                                            <span class="font-italic">Berkelanjutan</span>
+                                        @endif --}}
+                                    </td>
                                     <td width="100" align="center">
                                         <a href="{{url('')}}/questionnaires/{{$item->questionnaire_id}}" class="btn btn-primary btn-xs">Lihat</a>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
+                                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-update-questionnaires-{{$item->questionnaire_id}}">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete-questionnaires-{{$item->questionnaire_id}}">
+                                            Hapus
+                                        </button>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="modal-update-questionnaires-{{$item->questionnaire_id}}">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Ubah Kuesioner</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form class="form-horizontal" method="POST" action="{{url('')}}/questionnaires/update">
+                                                @csrf
+                                                <div class="card-body">
+                                                    <div class="form-group row">
+                                                        <label for="inputNameUpdate" class="col-sm-3 col-form-label">Nama Kuesioner</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputNameUpdate" placeholder="Nama Kuesioner" name="name" value="{{$item->name}}"/>
+                                                            @error('name')
+                                                                <span class="text-danger" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputStartDate" class="col-sm-3 col-form-label">Tanggal Mulai</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="date" class="form-control" id="inputStartDateUpdate" placeholder="Tanggal Mulai" name="start_date" value="{{$item->start_date}}"/>
+                                                            @error('start_date')
+                                                                <span class="text-danger" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputEndDate" class="col-sm-3 col-form-label">Tanggal Selesai</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="date" class="form-control" id="inputEndDateUpdate" placeholder="Tanggal Selesai" name="end_date" value="{{$item->end_date}}"/>
+                                                            @error('end_date')
+                                                                <span class="text-danger" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputDetails" class="col-sm-3 col-form-label">Keterangan</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputDetailsUpdate" placeholder="Keterangan" name="details" value="{{$item->details}}"/>
+                                                            @error('details')
+                                                                <span class="text-danger" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="questionnaire_id" value="{{ $item->questionnaire_id }}">
+
+                                                    <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <div class="modal fade" id="modal-delete-questionnaires-{{$item->questionnaire_id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Hapus Pertanyaan</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form class="form-horizontal" method="POST" action="{{url('')}}/questionnaires/update">
+                                                @csrf
+                                                <div class="card-body">
+                                                    <input type="hidden" name="questionnaire_id" value="{{ $item->questionnaire_id }}">
+                                                    <input type="hidden" name="is_active" value="0">
+
+                                                    <button type="submit" class="btn btn-danger" style="float: right;">Hapus</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
                                 @endforeach
-                                {{-- <tr>
-                                    <td>1</td>
-                                    <td>Kuesioner Penumpang</td>
-                                    <td>11-7-2014</td>
-                                    <td>20-7-2014</td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <a href="{{url('')}}/questionnaires/1" class="btn btn-primary btn-xs">Lihat</a>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr> --}}
-                                {{-- <tr>
-                                    <td>2</td>
-                                    <td>Kuesioner Pelayanan Kapal</td>
-                                    <td>11-7-2014</td>
-                                    <td>20-7-2014</td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <a href="" class="btn btn-primary btn-xs">Lihat</a>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Kuesioner Pelayanan Peti Kemas</td>
-                                    <td>11-7-2014</td>
-                                    <td>20-7-2014</td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <a href="" class="btn btn-primary btn-xs">Lihat</a>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Kuesioner Pelayanan Non-Peti Kemas</td>
-                                    <td>11-7-2014</td>
-                                    <td>20-7-2014</td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    <td>
-                                        <a href="" class="btn btn-primary btn-xs">Lihat</a>
-                                        <a href="" class="btn btn-warning btn-xs">Edit</a>
-                                        <a href="" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr> --}}
                             </tbody>
                         </table>
                     </div>

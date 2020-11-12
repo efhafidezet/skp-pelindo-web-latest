@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Enumerator extends Model
 {
     use HasFactory;
 
-    protected $table = 'groups';
+    protected $table = 'users';
 
     protected $fillable = [
         'name',
-        'order',
+        'email',
+        'password',
+        'role',
+        'details',
         'is_active',
     ];
 
-    protected $primaryKey = 'group_id';
-
-    // public function getNameAttribute($name) {
-    //     return ucwords($name);
-    // }
+    protected $primaryKey = 'id';
 }

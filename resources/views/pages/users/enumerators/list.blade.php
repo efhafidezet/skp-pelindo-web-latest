@@ -3,7 +3,7 @@
 @section('title', 'PELINDO IV - Survey Kepuasan Pelanggan')
 
 @section('content_header')
-<h1>Daftar Parameter</h1>
+<h1>Daftar Enumerator</h1>
 @stop
 
 @section('content')
@@ -37,30 +37,28 @@
                             <thead>
                                 <tr>
                                     <th width="5">No</th>
-                                    <th>Nama Parameter</th>
-                                    <th>Order</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($listGroup as $index => $item )
-                                @if ($item->group_id != 0)
+                                @php $no = 1; @endphp
+                                @foreach ($listEnumerator as $index => $item )
                                 <tr>
-                                    <td align="center">{{$index}}</td>
+                                    <td align="center">{{$no}}</td>
                                     <td>{{$item->name}}</td>
-                                    <td width="50" align="center">
-                                        {{$item->order}}
-                                    </td>
+                                    <td>{{$item->email}}</td>
                                     <td width="100" align="center">
-                                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-update-groups-{{$item->group_id}}">
+                                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-update-{{$item->id}}">
                                             Edit
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete-groups-{{$item->group_id}}">
+                                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete-{{$item->id}}">
                                             Hapus
                                         </button>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modal-update-groups-{{$item->group_id}}">
+                                <div class="modal fade" id="modal-update-{{$item->id}}">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -69,13 +67,13 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form class="form-horizontal" method="POST" action="{{url('')}}/groups/update">
+                                            <form class="form-horizontal" method="POST" action="{{url('')}}/enumerators/update">
                                                 @csrf
                                                 <div class="card-body">
                                                     <div class="form-group row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Nama Parameter</label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Nama</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control" id="inputName" placeholder="Nama Parameter" name="name" value="{{$item->name}}"/>
+                                                            <input type="text" class="form-control" id="inputName" placeholder="Nama" name="name" value="{{$item->name}}"/>
                                                             @error('name')
                                                                 <span class="text-danger" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -84,18 +82,32 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="inputOrder" class="col-sm-3 col-form-label">Order</label>
+                                                        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                                         <div class="col-sm-9">
-                                                            <input type="number" class="form-control" id="inputOrder" placeholder="Order" name="order" value="{{$item->order}}"/>
-                                                            @error('order')
+                                                            <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="{{$item->email}}"/>
+                                                            @error('email')
                                                                 <span class="text-danger" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <input type="hidden" name="group_id" value="{{ $item->group_id }}">
-                                                    
+                                                    <div class="form-group row">
+                                                        <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" value="" required/>
+                                                            @error('password')
+                                                                <span class="text-danger" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="role" class="form-control" value="{{$item->role}}" placeholder="role">
+                                                    <input type="hidden" name="details" class="form-control" value="{{$item->details}}" placeholder="details">
+                                                    <input type="hidden" name="is_active" class="form-control" value="{{$item->is_active}}" placeholder="is_active">
+                                                    <input type="hidden" name="id" class="form-control" value="{{$item->id}}" placeholder="is_active">
+                                
                                                     <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
                                                 </div>
                                             </form>
@@ -104,7 +116,7 @@
                                     </div>
                                     <!-- /.modal-dialog -->
                                 </div>
-                                <div class="modal fade" id="modal-delete-groups-{{$item->group_id}}">
+                                {{-- <div class="modal fade" id="modal-delete-{{$item->id}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -126,8 +138,8 @@
                                         <!-- /.modal-content -->
                                     </div>
                                     <!-- /.modal-dialog -->
-                                </div>
-                                @endif
+                                </div> --}}
+                                @php $no++; @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -152,24 +164,47 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" method="POST" action="{{url('')}}/groups">
+            <form class="form-horizontal" method="POST" action="{{url('')}}/enumerators">
                 @csrf
                 <div class="card-body">
-                    @include('pages.groups.form')
-                    {{-- <div class="form-group row">
-                        <label for="inputName" class="col-sm-3 col-form-label">Nama Parameter</label>
+                    <div class="form-group row">
+                        <label for="inputName" class="col-sm-3 col-form-label">Nama</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputName" placeholder="Nama Parameter" name="name"/>
+                            <input type="text" class="form-control" id="inputName" placeholder="Nama" name="name" value="{{ old('name') }}"/>
+                            @error('name')
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputOrder" class="col-sm-3 col-form-label">Order</label>
+                        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="inputOrder" placeholder="Order" name="order"/>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="{{ old('email') }}"/>
+                            @error('email')
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" value="{{ old('password') }}"/>
+                            @error('password')
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <input type="hidden" name="role" class="form-control" value="2" placeholder="role">
+                    <input type="hidden" name="details" class="form-control" value="null" placeholder="details">
+                    <input type="hidden" name="is_active" class="form-control" value="1" placeholder="is_active">
 
-                    <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button> --}}
+                    <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
                 </div>
                 <!-- /.card-body -->
                 {{-- <div class="modal-footer">

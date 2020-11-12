@@ -17,6 +17,7 @@ class CreateGroupsTable extends Migration
             $table->increments('group_id');
             $table->string('name');
             $table->integer('order')->unique();
+            $table->enum('is_active', array('0','1'))->default('1');
             $table->timestamps();
         });
     }

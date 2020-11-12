@@ -249,14 +249,14 @@ return [
         //     'label_color' => 'success',
         // ],
         ['header' => 'PENGGUNA'],
-        [
-            'text' => 'Administrator',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
+        // [
+        //     'text' => 'Administrator',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
         [
             'text' => 'Enumerator',
-            'url'  => 'admin/settings',
+            'url'  => 'enumerators',
             'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'KUESIONER'],
@@ -276,17 +276,17 @@ return [
             'url'  => 'result',
             'icon' => 'far fa-circle nav-icon',
         ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+        // ['header' => 'account_settings'],
+        // [
+        //     'text' => 'profile',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
+        // [
+        //     'text' => 'change_password',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'fas fa-fw fa-lock',
+        // ],
         // [
         //     'text'    => 'multilevel',
         //     'icon'    => 'fas fa-fw fa-share',
