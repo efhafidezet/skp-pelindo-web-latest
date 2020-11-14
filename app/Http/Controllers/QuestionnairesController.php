@@ -8,6 +8,8 @@ use App\Models\Question;
 use App\Models\Group;
 use App\Models\QuestionAnswer;
 use App\Models\Log;
+use Carbon\Carbon;
+use Auth;
 
 class QuestionnairesController extends Controller
 {
@@ -39,7 +41,17 @@ class QuestionnairesController extends Controller
     }
 
     public function questionnaireAuth() {
-        $data = Questionnaire::all();
+        if (Auth::user()->role == 2) {
+            $data = Questionnaire::all()->where('is_continuous', "1")
+            ->where('is_active', "1")
+            ->where('start_date', '<=', Carbon::now())
+            ->where('end_date', '>=', Carbon::now());
+        } else {
+            $data = Questionnaire::all()
+            ->where('is_active', "1")
+            ->where('start_date', '<=', Carbon::now())
+            ->where('end_date', '>=', Carbon::now());
+        }
         return response()->json($data, 200);
     }
 }

@@ -11,23 +11,49 @@ class AnswerController extends Controller
 {
     public function save(Request $request) {
         $id = $request->input('id_questionnaire');
-        DB::table('log_attempts')->insert([
-          'user_id' => Auth::user()->id,
-          'questionnaire_id' => $id,
-          'attempt' => '1' ,
-          'longitude' => '0',
-          'latitude' => '0',
-          'photo' => '0',
-          'attempt_date' => date("Y-m-d h:i:s", time()),
-          'created_at' => date("Y-m-d h:i:s", time()),
-         ]);
-
+        
+        $location = $request->input('location');
+        $long = "";
+        $lat = "";
+        if($location['long'] != null || $location['long'] != "" && $location['lat'] != null || $location['lat'] != "" ){
+            $long = $location['long'];
+            $lat = $location['lat'];
+        }
+        
+        $image = "";
+        if($request->input('image') != "" || $request->input('image') != null){
+            $image = $request->input('image');
+        }
+        
+        
         $data_log = DB::table('log_attempts')
         ->where('user_id', Auth::user()->id)
         ->where('questionnaire_id', $id)
         ->first();
 
         $id_log = $data_log->log_attempt_id;
+        
+        DB::table('log_attempts')
+            ->where('log_attempt_id', $id_log)
+            ->update(['attempt' => '1']);
+        
+        // DB::table('log_attempts')->insert([
+        //   'user_id' => Auth::user()->id,
+        //   'questionnaire_id' => $id,
+        //   'attempt' => '1' ,
+        //   'longitude' => $long,
+        //   'latitude' => $lat,
+        //   'photo' => $image,
+        //   'attempt_date' => date("Y-m-d h:i:s", time()),
+        //   'created_at' => date("Y-m-d h:i:s", time()),
+        //  ]);
+
+        // $data_log = DB::table('log_attempts')
+        // ->where('user_id', Auth::user()->id)
+        // ->where('questionnaire_id', $id)
+        // ->first();
+
+        // $id_log = $data_log->log_attempt_id;
 
         $group = $request->input('answer_data');
         foreach ($group as $data) {
@@ -43,7 +69,6 @@ class AnswerController extends Controller
             }
         }
 
-        return response()->json('Success', 200);
+        return response()->json("Success", 200);
     }
-
 }

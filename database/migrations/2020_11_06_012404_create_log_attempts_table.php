@@ -17,6 +17,7 @@ class CreateLogAttemptsTable extends Migration
             $table->increments('log_attempt_id');
             $table->integer('user_id');
             $table->integer('questionnaire_id');
+            $table->integer('branch');
             $table->integer('attempt');
             $table->dateTime('attempt_date');
             $table->text('longitude');

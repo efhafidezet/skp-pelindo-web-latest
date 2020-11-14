@@ -16,7 +16,7 @@
 <div class="form-group row">
     <label for="inputDetails" class="col-sm-3 col-form-label">Parameter</label>
     <div class="col-sm-9">
-        <select class="form-control select2bs4" name="group_id" style="width: 100%;">
+        <select class="form-control select2" name="group_id" style="width: 100%;">
             @foreach ($listGroup as $val)
             @if ($val->group_id != 0)
             <option value="{{$val->group_id}}">{{$val->name}}</option>

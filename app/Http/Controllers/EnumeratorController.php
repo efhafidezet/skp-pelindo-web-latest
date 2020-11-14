@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class EnumeratorController extends Controller
 {
     public function show() {
-        $listEnumerator = User::all()->where('role', "2");
+        $listEnumerator = User::all()->where('role', "2")->where('is_active', "1");
         return view('pages.users.enumerators.list', compact('listEnumerator'));
     }
 
@@ -35,6 +35,14 @@ class EnumeratorController extends Controller
             'password' => Hash::make($request->get('password')),
             'role' => $request->get('role'),
             'details' => $request->get('details'),
+            'is_active' => $request->get('is_active'),
+        ]);
+
+        return redirect('enumerators/');
+    }
+    public function delete(Request $request) {
+        $data = Enumerator::where('id', $request->input('id'))->firstOrFail();
+        $data->update([
             'is_active' => $request->get('is_active'),
         ]);
 

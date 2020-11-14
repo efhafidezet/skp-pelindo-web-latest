@@ -79,17 +79,36 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th width="50">ID</th>
-                                    <th>Pertanyaan</th>
-                                    <th>Jawaban</th>
-                                </tr>
+                                    <td align="center" rowspan="0" width="50" style="vertical-align : middle;">
+                                        <b>ID</b>
+                                    </td>
+                                    <td rowspan="0" style="vertical-align : middle;">
+                                        <b>Pertanyaan</b>
+                                    </td>
+                                    <td align="center" colspan="2">
+                                        <b>Jawaban</b>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center">
+                                        <b>Kepuasan</b>
+                                    </td>
+                                    <td align="center">
+                                        <b>Kepentingan</b>
+                                    </td>
+                                  </tr>
                             </thead>
                             <tbody>
                                 @foreach ($listGroup as $val)
                                 @if ($val->group_id != 0)
                                     <tr class="bg-white">
-                                        <td colspan="3" class="font-italic">
+                                        <td colspan="2" class="font-italic">
                                             {{$val->name}}
+                                        </td>
+                                        <td align="center" colspan="2">
+                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#modal-question">
+                                                Saran & Catatan
+                                            </button>
                                         </td>
                                     </tr>
 
@@ -99,10 +118,17 @@
                                         <tr>
                                             <td align="center">{{$no}}</td>
                                             <td>{{$item->question}}</td>
-                                            <td>
+                                            <td align="center">
                                                 @foreach ($listAnswer as $itemLA)
                                                     @if ($itemLA->question_id == $item->question_id && $itemLA->log_attempt_id == $getLogA->log_attempt_id)
                                                         {{$itemLA->answer_1}}
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td align="center">
+                                                @foreach ($listAnswer as $itemLA)
+                                                    @if ($itemLA->question_id == $item->question_id && $itemLA->log_attempt_id == $getLogA->log_attempt_id)
+                                                        {{$itemLA->answer_2}}
                                                     @endif
                                                 @endforeach
                                             </td>

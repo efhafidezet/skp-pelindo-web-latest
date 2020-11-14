@@ -11,35 +11,29 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">
-                            {{-- Daftar Parameter --}}
-                        </h3>
+                        {{-- <h3 class="card-title">
+                            Daftar Parameter
+                        </h3> --}}
 
-                        {{-- <div class="card-tools">
-                            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modal-lg">
-                                Tambah Baru
-                            </button>
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div> --}}
+                        <div class="card-tools">
+                            <a href="{{url('')}}/export" class="btn btn-block btn-success btn-sm" target="_blank">
+                                Ekspor ke Excel
+                            </a>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-hover text-nowrap">
+                        <table id="example1" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th width="5">No</th>
+                                    <th width="5" class="text-center">No</th>
+                                    <th>Tanggal dan Waktu</th>
+                                    <th>Cabang</th>
                                     <th>Pengguna</th>
                                     <th>Kuesioner</th>
-                                    <th>Tanggal dan Waktu</th>
                                     <th align="center">Lokasi</th>
                                     <th align="center">Foto</th>
                                     <th></th>
@@ -49,7 +43,9 @@
                                 @foreach ($listResult as $index => $item )
                                 <tr>
                                     <td align="center">{{$index+1}}</td>
-                                    <td>
+                                    <td width="50">{{$item->attempt_date}}</td>
+                                    <td width="50">{{$item->branch_name}}</td>
+                                    <td width="50">
                                         {{$item->uname}}
                                         {{-- @foreach($listUser as $itemU)
                                             @if($itemU->id == $item->user_id)
@@ -57,19 +53,18 @@
                                             @endif
                                         @endforeach --}}
                                     </td>
-                                    <td>{{$item->qname}}</td>
-                                    <td>{{$item->attempt_date}}</td>
-                                    <td align="">
+                                    <td width="50">{{$item->qname}}</td>
+                                    <td class="text-center" width="25">
                                         <a href="http://maps.google.com/?q={{$item->latitude.','.$item->longitude}}" class="btn btn-secondary btn-xs" target="_blank">
                                             Lihat
                                         </a>
                                     </td>
-                                    <td align="">
+                                    <td class="text-center" width="25">
                                         <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#modal-img-{{$index+1}}">
                                             Lihat
                                         </button>
                                     </td>
-                                    <td width="100" align="center">
+                                    <td width="50" align="center">
                                         <a href="{{url('')}}/result/{{$item->log_attempt_id}}" class="btn btn-warning btn-xs">Lihat Jawaban</a>
                                     </td>
                                 </tr>
@@ -160,5 +155,13 @@
 @section('js')
 <script>
     console.log('Hi!'); 
+</script>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
 </script>
 @stop

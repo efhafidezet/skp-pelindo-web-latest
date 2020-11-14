@@ -79,7 +79,13 @@ class QuestionController extends Controller
                 $answer = $listQAnswer;
                 $answers = [];
                 $answers = $answer ;
-                $itemQ->question_answer = $answers;
+                if ($itemQ->question == "Saran dan catatan") {
+                    $itemQ->question_answer = [];
+                    $itemQ->note = $answers;
+                } else {
+                    $itemQ->question_answer = $answers;
+                    $itemQ->note = [];
+                }
             }
             
             $question = $listQuestion;

@@ -3,7 +3,7 @@
 @section('title', 'PELINDO IV - Survey Kepuasan Pelanggan')
 
 @section('content_header')
-<h1>Daftar Enumerator</h1>
+<h1>Daftar Responden</h1>
 @stop
 
 @section('content')
@@ -33,22 +33,42 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-hover text-nowrap">
+                        <table id="example1" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th width="5">No</th>
                                     <th>Nama</th>
                                     <th>Email</th>
+                                    <th>Kuesioner</th>
+                                    <th>Cabang</th>
+                                    <th class="text-center">Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php $no = 1; @endphp
-                                @foreach ($listEnumerator as $index => $item )
+                                @foreach ($listRespondent as $index => $item )
                                 <tr>
                                     <td align="center">{{$no}}</td>
-                                    <td>{{$item->name}}</td>
+                                    <td>{{$item->uname}}</td>
                                     <td>{{$item->email}}</td>
+                                    <td>
+                                        {{$item->qname}}
+                                    </td>
+                                    <td>
+                                        {{$item->branch_name}}
+                                    </td>
+                                    <td align="center">
+                                        @if ($item->attempt == 0)
+                                        <span class="btn btn-warning btn-xs">
+                                            Belum Survei
+                                        </span>
+                                        @else
+                                        <span class="btn btn-success btn-xs">
+                                            Telah Survei
+                                        </span>
+                                        @endif
+                                    </td>
                                     <td width="100" align="center">
                                         <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-update-{{$item->id}}">
                                             Edit
@@ -62,18 +82,18 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Ubah Enumerator</h4>
+                                                <h4 class="modal-title">Ubah Responden</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form class="form-horizontal" method="POST" action="{{url('')}}/enumerators/update">
+                                            <form class="form-horizontal" method="POST" action="{{url('')}}/respondents/update">
                                                 @csrf
                                                 <div class="card-body">
                                                     <div class="form-group row">
                                                         <label for="inputName" class="col-sm-3 col-form-label">Nama</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control" id="inputName" placeholder="Nama" name="name" value="{{$item->name}}"/>
+                                                            <input type="text" class="form-control" id="inputName" placeholder="Nama" name="name" value="{{$item->uname}}"/>
                                                             @error('name')
                                                                 <span class="text-danger" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -120,12 +140,12 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Hapus Enumerator</h4>
+                                                <h4 class="modal-title">Hapus Responden</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form class="form-horizontal" method="POST" action="{{url('')}}/enumerators/delete">
+                                            <form class="form-horizontal" method="POST" action="{{url('')}}/respondents/delete">
                                                 @csrf
                                                 <div class="card-body">
                                                     <input type="hidden" name="id" class="form-control" value="{{$item->id}}" placeholder="">
@@ -142,6 +162,17 @@
                                 @php $no++; @endphp
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th width="5">No</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Kuesioner</th>
+                                    <th>Cabang</th>
+                                    <th class="text-center">Status</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <!-- /.card-body -->
@@ -159,12 +190,12 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Enumerator Baru</h4>
+                <h4 class="modal-title">Tambah Responden Baru</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" method="POST" action="{{url('')}}/enumerators">
+            <form class="form-horizontal" method="POST" action="{{url('')}}/respondents">
                 @csrf
                 <div class="card-body">
                     <div class="form-group row">
@@ -200,9 +231,33 @@
                             @enderror
                         </div>
                     </div>
-                    <input type="hidden" name="role" class="form-control" value="2" placeholder="role">
+                    <input type="hidden" name="role" class="form-control" value="3" placeholder="role">
                     <input type="hidden" name="details" class="form-control" value="null" placeholder="details">
                     <input type="hidden" name="is_active" class="form-control" value="1" placeholder="is_active">
+
+                    <div class="form-group row">
+                        <label for="inputQ" class="col-sm-3 col-form-label">Kuesioner</label>
+                        <div class="col-sm-9">
+                            <select class="form-control select2bs4" name="questionnaire_id" style="width: 100%;">
+                                @foreach ($listQuestionnaire as $val)
+                                    @if ($val->questionnaire_id != 0 && $val->questionnaire_id != 1)
+                                        <option value="{{$val->questionnaire_id}}">{{$val->name}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputQ" class="col-sm-3 col-form-label">Cabang</label>
+                        <div class="col-sm-9">
+                            <select class="form-control select2bs4" name="branch_id" style="width: 100%;">
+                                @foreach ($listBranch as $val)
+                                    <option value="{{$val->branch_id}}">{{$val->branch_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <button type="submit" class="btn btn-primary" style="float: right;">Simpan</button>
                 </div>
@@ -227,5 +282,13 @@
 @section('js')
 <script>
     console.log('Hi!'); 
+</script>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
 </script>
 @stop
